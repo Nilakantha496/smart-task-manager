@@ -8,7 +8,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'dev-secret-key-123'
     
-    db_url = os.environ.get('DATABASE_URL')
+    db_url = os.environ.get('DATABASE_URL') or os.environ.get('POSTGRES_URL')
     if db_url:
         if db_url.startswith("postgres://"):
             db_url = db_url.replace("postgres://", "postgresql://", 1)
