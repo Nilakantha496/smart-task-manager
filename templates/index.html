@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Task Manager{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1 class="page-title">My Tasks</h1>
+    <div class="header-actions">
+        <input type="text" id="search-input" placeholder="Search tasks..." class="form-control inline-input">
+        <select id="priority-filter" class="form-control inline-select">
+            <option value="All">All Priorities</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <button id="add-task-btn" class="btn btn-primary"><i class="fas fa-plus"></i> New Task</button>
+    </div>
+</div>
+
+<div class="task-board">
+    <!-- Task columns for better visual organization -->
+    <div class="task-column">
+        <h3 class="column-title">Pending Tasks <span class="badge" id="pending-count">0</span></h3>
+        <div id="pending-tasks" class="task-list">
+            <!-- Pending tasks will be loaded here -->
+        </div>
+    </div>
+    
+    <div class="task-column">
+        <h3 class="column-title">Completed Tasks <span class="badge badge-success" id="completed-count">0</span></h3>
+        <div id="completed-tasks" class="task-list">
+            <!-- Completed tasks will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Add/Edit Task -->
+<div id="task-modal" class="modal">
+    <div class="modal-content glass-panel">
+        <span class="close-modal">&times;</span>
+        <h2 id="modal-title">Add New Task</h2>
+        <form id="task-form">
+            <input type="hidden" id="task-id">
+            <div class="form-group">
+                <label for="task-title">Title</label>
+                <input type="text" id="task-title" required placeholder="Task title">
+            </div>
+            <div class="form-group">
+                <label for="task-desc">Description</label>
+                <textarea id="task-desc" rows="4" placeholder="Task description (optional)"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label for="task-priority">Priority</label>
+                    <select id="task-priority" class="form-control">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+                <div class="form-group half-width">
+                    <label for="task-due">Due Date</label>
+                    <input type="date" id="task-due" class="form-control">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Save Task</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

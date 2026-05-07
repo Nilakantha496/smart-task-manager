@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Task Manager{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card glass-panel">
+        <h2 class="auth-title">Welcome Back</h2>
+        <p class="auth-subtitle">Login to manage your tasks</p>
+        
+        <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="{{ url_for('register') }}">Sign up here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
