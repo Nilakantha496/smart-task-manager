@@ -7,7 +7,10 @@ from models import User, Task
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'dev-secret-key-123'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
+    if os.environ.get('VERCEL'):
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/tasks.db'
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
@@ -135,8 +138,8 @@ def create_app():
     return app
 
 app = create_app()
+with app.app_context():
+    db.create_all()
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
